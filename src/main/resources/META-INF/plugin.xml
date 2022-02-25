@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>com.aquasecurity.plugins.intellij-tfsec</id>
+    <name>Tfsec Findings Explorer</name>
+    <vendor email="owen.rumney@aquasec.com" url="https://aquasecurity.github.io/tfsec">Aqua Security</vendor>
+
+    <description>tfsec integration for Jetbrains tools. Adds a findings explorer and help menu</description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="TFSec Findings" secondary="true" icon="com.aquasecurity.plugins.tfsec.icons.TfsecIcons.Tfsec"
+                    anchor="left"
+                    factoryClass="com.aquasecurity.plugins.tfsec.ui.TfsecWindowFactory"/>
+        <notificationGroup id="TFSec Notifications" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <action id="com.aquasecurity.plugins.tfsec.actions.RunScannerAction" icon="AllIcons.Debugger.ThreadRunning"
+                class="com.aquasecurity.plugins.tfsec.actions.RunScannerAction" text="Run tfsec"
+                description="Run tfsec now to update results"/>
+        <action id="com.aquasecurity.plugins.tfsec.actions.ClearResultsAction"
+                icon="CollaborationToolsIcons.DeleteHovered"
+                class="com.aquasecurity.plugins.tfsec.actions.ClearResultsAction" text="Clear Results"
+                description="Attempt to update tfsec using tfsec --update command"/>
+        <action id="com.aquasecurity.plugins.tfsec.actions.UpdateTfsecAction" icon="AllIcons.Actions.Download"
+                class="com.aquasecurity.plugins.tfsec.actions.UpdateTfsecAction" text="Update tfsec"
+                description="Attempt to update tfsec using tfsec --update command"/>
+    </actions>
+</idea-plugin>
