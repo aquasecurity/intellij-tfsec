@@ -28,7 +28,7 @@ public class ClearResultsAction extends AnAction {
         if (project == null) {
             return;
         }
-        final ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow("TFSec Findings");
+        final ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Tfsec Findings");
         final Content content = toolWindow.getContentManager().getContent(0);
         final TfsecWindow tfsecWindow = (TfsecWindow) content.getComponent();
         tfsecWindow.updateFindings(null);

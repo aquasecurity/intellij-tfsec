@@ -1,11 +1,14 @@
 package com.aquasecurity.plugins.tfsec.ui.notify;
 
-import com.intellij.notification.NotificationGroupManager;
+import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nullable;
 
 public class TfsecNotificationGroup {
+    private static final NotificationGroup NOTIFICATION_GROUP = NotificationGroup.findRegisteredGroup("Tfsec Notifications");
+
+
     public static void notifyError(@Nullable Project project, String content) {
         notify(project, content, NotificationType.ERROR);
     }
@@ -19,8 +22,6 @@ public class TfsecNotificationGroup {
     }
 
     private static void notify(@Nullable Project project, String content, NotificationType notificationType) {
-        NotificationGroupManager.getInstance().getNotificationGroup("TFSec Notifications")
-                .createNotification(content, notificationType)
-                .notify(project);
+        NOTIFICATION_GROUP.createNotification(content, notificationType).notify(project);
     }
 }

@@ -1,5 +1,6 @@
 package com.aquasecurity.plugins.tfsec.actions;
 
+import com.aquasecurity.plugins.tfsec.settings.TfsecSettingState;
 import com.aquasecurity.plugins.tfsec.ui.notify.TfsecNotificationGroup;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
@@ -37,7 +38,7 @@ class TfsecBackgroundRunTask extends Task.Backgroundable implements Runnable {
     @Override
     public void run() {
         List<String> commandParts = new ArrayList<>();
-        commandParts.add("tfsec");
+        commandParts.add(TfsecSettingState.getInstance().tfsecPath);
         commandParts.add("-f=json");
         commandParts.add("--soft-fail");
         commandParts.add(String.format("--out=%s", resultFile.getAbsolutePath()));

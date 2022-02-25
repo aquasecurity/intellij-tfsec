@@ -29,7 +29,7 @@ public class ResultProcessor {
         }
 
         // redraw the explorer with the updated content
-        final ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow("TFSec Findings");
+        final ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Tfsec Findings");
         final Content content = toolWindow.getContentManager().getContent(0);
         final TfsecWindow tfsecWindow = (TfsecWindow) content.getComponent();
         tfsecWindow.updateFindings(findings);

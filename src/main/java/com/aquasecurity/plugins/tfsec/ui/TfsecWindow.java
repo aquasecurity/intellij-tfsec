@@ -50,6 +50,7 @@ public class TfsecWindow extends SimpleToolWindowPanel {
         actionGroup.add(actionManager.getAction("com.aquasecurity.plugins.tfsec.actions.RunScannerAction"));
         actionGroup.add(actionManager.getAction("com.aquasecurity.plugins.tfsec.actions.ClearResultsAction"));
         actionGroup.add(actionManager.getAction("com.aquasecurity.plugins.tfsec.actions.UpdateTfsecAction"));
+        actionGroup.add(actionManager.getAction("com.aquasecurity.plugins.tfsec.actions.ShowTfsecSettingsAction"));
 
         ActionToolbar actionToolbar = actionManager.createActionToolbar("ACTION_TOOLBAR", actionGroup, true);
         actionToolbar.setOrientation(SwingConstants.VERTICAL);
@@ -65,6 +66,7 @@ public class TfsecWindow extends SimpleToolWindowPanel {
     public void updateFindings(Findings findings) {
         if (findings == null) {
             this.root = null;
+            return;
         }
         findings.setBasePath(project.getBasePath());
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Findings by severity");
@@ -135,5 +137,9 @@ public class TfsecWindow extends SimpleToolWindowPanel {
         splitPane.add(ScrollPaneFactory.createScrollPane(this.root));
         splitPane.add(this.findingsHelper);
         this.add(splitPane);
+    }
+
+    public boolean hasFindings() {
+        return this.root != null;
     }
 }
