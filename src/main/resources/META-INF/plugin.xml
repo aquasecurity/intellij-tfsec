@@ -1,0 +1,44 @@
+<idea-plugin>
+    <id>com.aquasecurity.plugins.intellij-tfsec</id>
+    <name>Tfsec Findings Explorer</name>
+    <vendor email="owen.rumney@aquasec.com" url="https://aquasecurity.github.io/tfsec">Aqua Security</vendor>
+<idea-version since-build="203.*" />
+    <description><![CDATA[tfsec integration for Jetbrains tools. <br/>
+
+Scan your Terraform infrastructure as code files with tfsec and then navigate with the handy Findings Explorer.<br/>
+
+Additional help and context is provided in the Findings help pane for each issue identified.
+]]></description>
+    <change-notes>
+        - Initial release
+    </change-notes>
+    
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Tfsec Findings" secondary="true" icon="com.aquasecurity.plugins.tfsec.icons.TfsecIcons.Tfsec"
+                    anchor="left"
+                    factoryClass="com.aquasecurity.plugins.tfsec.ui.TfsecWindowFactory"/>
+        <notificationGroup id="Tfsec Notifications" displayType="BALLOON"/>
+        <applicationConfigurable parentId="tools" instance="com.aquasecurity.plugins.tfsec.settings.TfsecSettingsConfigurable"
+                                 id="com.aquasecurity.plugins.tfsec.settings.TfsecSettingsConfigurable"
+                                 displayName="Tfsec: Settings"/>
+        <applicationService serviceImplementation="com.aquasecurity.plugins.tfsec.settings.TfsecSettingState"/>
+    </extensions>
+
+    <actions>
+        <action id="com.aquasecurity.plugins.tfsec.actions.RunScannerAction" icon="AllIcons.Debugger.ThreadRunning"
+                class="com.aquasecurity.plugins.tfsec.actions.RunScannerAction" text="Run tfsec"
+                description="Run tfsec now to update results"/>
+        <action id="com.aquasecurity.plugins.tfsec.actions.ClearResultsAction"
+                icon="CollaborationToolsIcons.DeleteHovered"
+                class="com.aquasecurity.plugins.tfsec.actions.ClearResultsAction" text="Clear Results"
+                description="Clear results window"/>
+        <action id="com.aquasecurity.plugins.tfsec.actions.UpdateTfsecAction" icon="AllIcons.Actions.Download"
+                class="com.aquasecurity.plugins.tfsec.actions.UpdateTfsecAction" text="Update tfsec"
+                description="Attempt to update tfsec using tfsec --update command"/>
+        <action id="com.aquasecurity.plugins.tfsec.actions.ShowTfsecSettingsAction" icon="AllIcons.General.Settings"
+                class="com.aquasecurity.plugins.tfsec.actions.ShowTfsecSettingsAction" text="Show settings"
+                description="Show Settings dialog"/>
+    </actions>
+</idea-plugin>
