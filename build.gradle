@@ -20,11 +20,7 @@ intellij {
     version = '2021.3.2'
     updateSinceUntilBuild = false
 }
-patchPluginXml {
-    changeNotes = """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
-}
+
 test {
     useJUnitPlatform()
 }
