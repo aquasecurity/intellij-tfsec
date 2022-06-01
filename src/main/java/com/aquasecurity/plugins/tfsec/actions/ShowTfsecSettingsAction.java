@@ -23,7 +23,6 @@ public class ShowTfsecSettingsAction extends AnAction {
             return ;
         }
 
-        TfsecSettingsConfigurable configurable = new TfsecSettingsConfigurable();
-       ShowSettingsUtil.getInstance().editConfigurable(project, configurable);
+       ShowSettingsUtil.getInstance().showSettingsDialog(project, "Tfsec: Settings");
     }
 }

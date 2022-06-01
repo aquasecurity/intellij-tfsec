@@ -9,9 +9,9 @@ Scan your Terraform infrastructure as code files with tfsec and then navigate wi
 
 Additional help and context is provided in the Findings help pane for each issue identified.
 ]]></description>
-    <change-notes>
-        - Initial release
-    </change-notes>
+    <change-notes><![CDATA[v1.1.0 - Fix rendering of help menu and links<br />
+v1.0 - Initial release<br />
+]]></change-notes>
     
     <depends>com.intellij.modules.platform</depends>
 

@@ -1,5 +1,6 @@
 package com.aquasecurity.plugins.tfsec.ui;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -11,7 +12,7 @@ public class TfsecWindowFactory implements ToolWindowFactory {
 
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         TfsecWindow tfsecWindow = new TfsecWindow(project);
-        ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
+        ContentFactory contentFactory = ApplicationManager.getApplication().getService(ContentFactory.class);
         Content content = contentFactory.createContent(tfsecWindow.getContent(), "", false);
         toolWindow.getContentManager().addContent(content);
     }

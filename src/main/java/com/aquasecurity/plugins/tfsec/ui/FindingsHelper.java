@@ -1,6 +1,9 @@
 package com.aquasecurity.plugins.tfsec.ui;
 
 import com.aquasecurity.plugins.tfsec.model.Finding;
+import com.intellij.ide.BrowserUtil;
+import com.intellij.openapi.roots.ui.componentsList.components.ScrollablePanel;
+import com.intellij.ui.JBColor;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import org.jdesktop.swingx.JXHyperlink;
@@ -8,16 +11,20 @@ import org.jdesktop.swingx.JXHyperlink;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.List;
 
-public class FindingsHelper extends JPanel {
+public class FindingsHelper extends ScrollablePanel {
 
     private Finding finding;
 
     public FindingsHelper() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(JBUI.Borders.empty(10));
+        setBackground(JBColor.PanelBackground);
+
     }
 
     public void setFinding(Finding finding) {
@@ -65,6 +72,8 @@ public class FindingsHelper extends JPanel {
             hyperlink.setToolTipText(link);
             hyperlink.setClickedColor(hyperlink.getUnclickedColor());
             hyperlink.setBorder(JBUI.Borders.emptyTop(5));
+            hyperlink.setEnabled(true);
+            hyperlink.addActionListener(e -> BrowserUtil.browse(URI.create(e.getActionCommand())));
             section.add(hyperlink);
 
         });

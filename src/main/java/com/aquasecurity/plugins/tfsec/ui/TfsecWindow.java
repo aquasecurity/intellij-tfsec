@@ -18,6 +18,7 @@ import com.intellij.openapi.ui.SimpleToolWindowPanel;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.ui.ScrollPaneFactory;
+import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.treeStructure.Tree;
 import org.jetbrains.annotations.Nullable;
 
@@ -109,11 +110,15 @@ public class TfsecWindow extends SimpleToolWindowPanel {
             this.findingsHelper.setFinding(node.getFinding());
 
             VirtualFile file = VirtualFileManager.getInstance().refreshAndFindFileByNioPath(Paths.get(findingLocation.Filename));
-            OpenFileDescriptor ofd = new OpenFileDescriptor(project, file, findingLocation.StartLine - 1, 0);
-            if (ofd == null) {
+            if (file == null || !file.exists()) {
                 return;
             }
+
+            OpenFileDescriptor ofd = new OpenFileDescriptor(project, file, findingLocation.StartLine - 1, 0);
             Editor editor = FileEditorManager.getInstance(project).openTextEditor(ofd, true);
+            if (editor == null) {
+                return;
+            }
             editor.getSelectionModel()
                     .setBlockSelection(new LogicalPosition(findingLocation.StartLine - 1, 0),
                             new LogicalPosition(findingLocation.EndLine - 1, 1000));
@@ -134,8 +139,8 @@ public class TfsecWindow extends SimpleToolWindowPanel {
     private void updateView() {
         JSplitPane splitPane = new JSplitPane(0);
         splitPane.setDividerSize(1);
-        splitPane.add(ScrollPaneFactory.createScrollPane(this.root));
-        splitPane.add(this.findingsHelper);
+        splitPane.add(new JBScrollPane(this.root));
+        splitPane.add(new JBScrollPane(this.findingsHelper));
         this.add(splitPane);
     }
 
