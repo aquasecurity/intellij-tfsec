@@ -54,6 +54,7 @@ public class TfsecWindow extends SimpleToolWindowPanel {
         actionGroup.add(actionManager.getAction("com.aquasecurity.plugins.tfsec.actions.ShowTfsecSettingsAction"));
 
         ActionToolbar actionToolbar = actionManager.createActionToolbar("ACTION_TOOLBAR", actionGroup, true);
+        actionToolbar.setTargetComponent(this);
         actionToolbar.setOrientation(SwingConstants.VERTICAL);
         this.setToolbar(actionToolbar.getComponent());
     }
@@ -138,7 +139,7 @@ public class TfsecWindow extends SimpleToolWindowPanel {
 
     private void updateView() {
         JSplitPane splitPane = new JSplitPane(0);
-        splitPane.setDividerSize(1);
+        splitPane.setDividerSize(2);
         splitPane.add(new JBScrollPane(this.root));
         splitPane.add(new JBScrollPane(this.findingsHelper));
         this.add(splitPane);
