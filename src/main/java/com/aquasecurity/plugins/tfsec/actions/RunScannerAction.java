@@ -4,9 +4,14 @@ package com.aquasecurity.plugins.tfsec.actions;
 import com.aquasecurity.plugins.tfsec.ui.notify.TfsecNotificationGroup;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DataConstants;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypes;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -19,6 +24,7 @@ import java.io.IOException;
 public class RunScannerAction extends AnAction {
 
     private Project project;
+    private String directory;
 
     @Override
     public void update(@NotNull AnActionEvent e) {
@@ -33,6 +39,17 @@ public class RunScannerAction extends AnAction {
             return;
         }
 
+        this.directory = this.project.getBasePath();
+        VirtualFile virtualFile = CommonDataKeys.VIRTUAL_FILE.getData(e.getDataContext());
+
+        if (virtualFile != null) {
+            if (virtualFile.getFileType() == FileTypes.UNKNOWN) {
+                this.directory = virtualFile.getPath();
+            } else {
+                this.directory = virtualFile.getParent().getPath();
+            }
+        }
+
         File resultFile = null;
         try {
             resultFile = File.createTempFile("tfsec", ".json");
@@ -40,7 +57,7 @@ public class RunScannerAction extends AnAction {
             TfsecNotificationGroup.notifyError(project, ex.getLocalizedMessage());
         }
 
-        TfsecBackgroundRunTask runner = new TfsecBackgroundRunTask(project, resultFile, ResultProcessor::updateResults);
+        TfsecBackgroundRunTask runner = new TfsecBackgroundRunTask(project, directory, resultFile, ResultProcessor::updateResults);
         if (SwingUtilities.isEventDispatchThread()) {
             ProgressManager.getInstance().run(runner);
         } else {
@@ -50,5 +67,3 @@ public class RunScannerAction extends AnAction {
 
 
 }
-
-

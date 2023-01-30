@@ -38,20 +38,22 @@ public class TfsecSettingsConfigurable implements Configurable {
     @Override
     public boolean isModified() {
         TfsecSettingState settings = TfsecSettingState.getInstance();
-        boolean modified = !tfsecSettingsComponent.getTfsecPath().equals(settings.tfsecPath);
-        return modified;
+        return !tfsecSettingsComponent.getTfsecPath().equals(settings.tfsecPath) ||
+                !tfsecSettingsComponent.getTfsecOptions().equals(settings.tfsecOptions);
     }
 
     @Override
     public void apply() {
         TfsecSettingState settings = TfsecSettingState.getInstance();
         settings.tfsecPath = tfsecSettingsComponent.getTfsecPath();
+        settings.tfsecOptions = tfsecSettingsComponent.getTfsecOptions();
     }
 
     @Override
     public void reset() {
         TfsecSettingState settings = TfsecSettingState.getInstance();
         tfsecSettingsComponent.setTfsecPath(settings.tfsecPath);
+        tfsecSettingsComponent.setTfsecOptions(settings.tfsecOptions);
     }
 
     @Override

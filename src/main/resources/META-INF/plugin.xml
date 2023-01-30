@@ -9,7 +9,8 @@ Scan your Terraform infrastructure as code files with tfsec and then navigate wi
 
 Additional help and context is provided in the Findings help pane for each issue identified.
 ]]></description>
-    <change-notes><![CDATA[v1.1.0 - Fix rendering of help menu and links<br />
+    <change-notes><![CDATA[v1.2.0 - Add Run tfsec -action to right-click -menu & add tfsec options to settings<br />
+v1.1.0 - Fix rendering of help menu and links<br />
 v1.0 - Initial release<br />
 ]]></change-notes>
     
@@ -29,7 +30,9 @@ v1.0 - Initial release<br />
     <actions>
         <action id="com.aquasecurity.plugins.tfsec.actions.RunScannerAction" icon="AllIcons.Debugger.ThreadRunning"
                 class="com.aquasecurity.plugins.tfsec.actions.RunScannerAction" text="Run tfsec"
-                description="Run tfsec now to update results"/>
+                description="Run tfsec now to update results">
+            <add-to-group group-id="RunContextGroup" anchor="last"/>
+        </action>
         <action id="com.aquasecurity.plugins.tfsec.actions.ClearResultsAction"
                 icon="CollaborationToolsIcons.DeleteHovered"
                 class="com.aquasecurity.plugins.tfsec.actions.ClearResultsAction" text="Clear Results"

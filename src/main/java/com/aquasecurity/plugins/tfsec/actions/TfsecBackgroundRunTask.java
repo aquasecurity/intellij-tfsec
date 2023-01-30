@@ -9,23 +9,27 @@ import com.intellij.execution.process.ScriptRunnerUtil;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 class TfsecBackgroundRunTask extends Task.Backgroundable implements Runnable {
 
     private final Project project;
+    private final String directory;
     private final File resultFile;
     private final BiConsumer<Project, File> callback;
 
-    public TfsecBackgroundRunTask(Project project, File resultFile, BiConsumer<Project, File> updateResults) {
+    public TfsecBackgroundRunTask(Project project, String directory, File resultFile, BiConsumer<Project, File> updateResults) {
         super(project, "Running tfsec", false);
         this.project = project;
+        this.directory = directory;
         this.resultFile = resultFile;
         this.callback = updateResults;
     }
@@ -38,11 +42,18 @@ class TfsecBackgroundRunTask extends Task.Backgroundable implements Runnable {
     @Override
     public void run() {
         List<String> commandParts = new ArrayList<>();
-        commandParts.add(TfsecSettingState.getInstance().tfsecPath);
+        TfsecSettingState settingState = TfsecSettingState.getInstance();
+
+        commandParts.add(settingState.tfsecPath);
         commandParts.add("-f=json");
         commandParts.add("--soft-fail");
         commandParts.add(String.format("--out=%s", resultFile.getAbsolutePath()));
-        commandParts.add(this.project.getBasePath());
+
+        if (!Objects.equals(settingState.tfsecOptions, "")) {
+            commandParts.add(settingState.tfsecOptions);
+        }
+
+        commandParts.add(this.directory);
 
         GeneralCommandLine commandLine = new GeneralCommandLine(commandParts);
 

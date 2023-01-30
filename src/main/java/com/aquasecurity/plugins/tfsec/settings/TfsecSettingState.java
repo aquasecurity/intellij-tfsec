@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 public class TfsecSettingState implements PersistentStateComponent<TfsecSettingState> {
 
     public String tfsecPath = "tfsec";
+    public String tfsecOptions = "";
 
     public static TfsecSettingState getInstance() {
         return ApplicationManager.getApplication().getService(TfsecSettingState.class);
